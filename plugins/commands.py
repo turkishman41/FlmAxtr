@@ -18,16 +18,16 @@ logger = logging.getLogger(__name__)
 
 @Client.on_message(~filters.channel & filters.command(["start", "help", "h", "y", "yardım", "yardim", "stats"]))
 async def start(client: Client, message: Message):
-#AUTH_CHANNEL da banlıysa cevap vermicek :d
-#if AUTH_CHANNEL:
-    #try:
-        #user = await client.get_chat_member(AUTH_CHANNEL, message.chat.id)
-        #if user.status == ChatMemberStatus.Banned:
-            #await client.send_message(LOG_CHANNEL, 
-                #f"AUTH_CHANNEL da banlı biri botu çalıştırdı (message.chat.id) haberin olsun",
-            #)
-            #return 
-    # kanala katıldı mı & özeli kontrol et
+  #AUTH_CHANNEL da banlıysa cevap vermicek :d
+  if AUTH_CHANNEL:
+      try:
+          user = await client.get_chat_member(AUTH_CHANNEL, message.chat.id)
+          if user.status == ChatMemberStatus.Banned:
+              await client.send_message(LOG_CHANNEL, 
+                  f"AUTH_CHANNEL da banlı biri botu çalıştırdı (message.chat.id) haberin olsun",
+              )
+              return 
+       kanala katıldı mı & özeli kontrol et
     if message.chat.type == ChatType.PRIVATE:
         if AUTH_CHANNEL and not await is_subscribed(client, message):
             if JOIN_CHANNEL_WARNING:
@@ -43,12 +43,15 @@ async def start(client: Client, message: Message):
                     "\nKatıldıktan sonra tekrar deneyin.", disable_web_page_preview=True, reply_markup=a)
             return
     # genel butonlar
-    butonlar = [[
-            InlineKeyboardButton('➕ Gruba ekle', url=f'http://t.me/{temp.U_NAME}?startgroup=true'),
-            InlineKeyboardButton('🔍 Ara', switch_inline_query_current_chat='')],
-            [InlineKeyboardButton('🔮 İstatistikler', callback_data='stats'),
-            InlineKeyboardButton('😊 Hakkında', callback_data='about')]
-    ]
+    butonlar = [
+            [
+                InlineKeyboardButton('Ara 🔍', switch_inline_query_current_chat=''),
+                InlineKeyboardButton('Bot Nasıl Kullanılır?', url='https://t.me/anagrupp2')
+            ],
+            [
+                InlineKeyboardButton('Bot Destek', url=f"https://t.me/mmagneto"),
+            ]
+            ]
     # grup ?
     if message.chat.type in [ChatType.GROUP, ChatType.SUPERGROUP]:
         reply_markup = InlineKeyboardMarkup(butonlar)
