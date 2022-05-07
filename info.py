@@ -139,10 +139,6 @@ LINK_FOR_EVERYTHING = environ.get('LINK_FOR_EVERYTHING', '')
 START_TXT = environ.get('START_TXT', defstarttxt)
 # 3 tane yer tutucu bırakın. örneğin: "selam {} ben {} {}"
 if not len(LINK_FOR_EVERYTHING) == 0: 
-START_TXT = """Merhaba {},
-Ben <a href='https://t.me/Anagrupbot'>Ana Grup Bot</a>, İnline Modda (Satır içi) çalışıyorum ve size film sağlamaya çalışıyorum. Eğer senin de bota eklenmesini istediğin film veya dizi önerin varsa <a href='https://t.me/Anagrupp'>İstek Ve Sohbet</a> Grubuna Beklerim."""
-HELP_TXT = """Merhaba {}
-İşte Komutlarım İçin Yardım ."""
 
 LINK_FOR_ABOUT_PIC = environ.get('LINK_FOR_ABOUT_PIC', 'https://telegra.ph/file/375b69b135524990cb7ca.jpg')
 # about kısmındaki foto linki.
