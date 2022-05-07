@@ -26,7 +26,7 @@ async def start(client: Client, message: Message):
             if JOIN_CHANNEL_WARNING:
                 try:
                     memlimit = None if (await client.get_chat(AUTH_CHANNEL)).username else 1
-                    link = await client.create_chat_invite_link(int(AUTH_CHANNEL), expire_date=date, member_limit = 1)
+                    link = await client.create_chat_invite_link(int(AUTH_CHANNEL), member_limit = 1)
                 except ChatAdminRequired:
                     return await client.send_message(LOG_CHANNEL, "Auth kanalında admin değilim. Link oluşturamıyorum.")
                 except Exception as e:
