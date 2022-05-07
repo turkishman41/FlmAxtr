@@ -27,7 +27,7 @@ async def start(client: Client, message: Message):
                   f"AUTH_CHANNEL da banlı biri botu çalıştırdı (message.chat.id) haberin olsun",
               )
               return 
-       kanala katıldı mı & özeli kontrol et
+    #kanala katıldı mı & özeli kontrol et
     if message.chat.type == ChatType.PRIVATE:
         if AUTH_CHANNEL and not await is_subscribed(client, message):
             if JOIN_CHANNEL_WARNING:
