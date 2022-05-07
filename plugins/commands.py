@@ -18,6 +18,8 @@ logger = logging.getLogger(__name__)
 
 @Client.on_message(~filters.channel & filters.command(["start", "help", "h", "y", "yardım", "yardim", "stats"]))
 async def start(client: Client, message: Message):
+    #AUTH_CHANNEL da banlıysa cevap vermicek :d
+    if
     # kanala katıldı mı & özeli kontrol et
     if message.chat.type == ChatType.PRIVATE:
         if AUTH_CHANNEL and not await is_subscribed(client, message):
