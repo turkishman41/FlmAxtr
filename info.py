@@ -139,7 +139,7 @@ LINK_FOR_EVERYTHING = environ.get('LINK_FOR_EVERYTHING', '')
 START_TXT = environ.get('START_TXT', defstarttxt)
 # 3 tane yer tutucu bırakın. örneğin: "selam {} ben {} {}"
 
-if not len(LINK_FOR_EVERYTHING) == 0: 
+
 LINK_FOR_ABOUT_PIC = environ.get('LINK_FOR_ABOUT_PIC', 'https://telegra.ph/file/375b69b135524990cb7ca.jpg')
 # about kısmındaki foto linki.
 defabout = f"[🔥]({LINK_FOR_ABOUT_PIC})" + " {}\n\n" + \
