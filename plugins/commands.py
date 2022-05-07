@@ -19,7 +19,17 @@ logger = logging.getLogger(__name__)
 @Client.on_message(~filters.channel & filters.command(["start", "help", "h", "y", "yardım", "yardim", "stats"]))
 async def start(client: Client, message: Message):
     #AUTH_CHANNEL da banlıysa cevap vermicek :d
-    #if
+    if AUTH_CHANNEL:
+        try:
+            user = await client.get_chat_member(AUTH_CHANNEL, message.chat.id)
+            if user.status == ChatMemberStatus.Banned:
+                await client.send_messages(
+                    chat_id=LOG_CHANNEL,
+                    text="AUTH_CHANNEL da banlı biri botu çalıştırdı (message.chat.id) haberin olsun",
+                    message_ids=message.message_id,
+                    revoke=True
+                )
+                return 
     # kanala katıldı mı & özeli kontrol et
     if message.chat.type == ChatType.PRIVATE:
         if AUTH_CHANNEL and not await is_subscribed(client, message):
