@@ -1,0 +1,11 @@
+services:
+  f1:
+    build: .
+    environment:
+      CONFIG_FILE_URL: $CONFIG_FILE_URL
+    ports:
+      - 8080
+    resources:
+      cpu: 1000m
+      memory: 3Gi
+    command: python3 bot.py

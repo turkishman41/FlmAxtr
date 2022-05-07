@@ -1,0 +1,11 @@
+pyrogram
+tgcrypto
+motor
+marshmallow
+umongo
+requests
+psutil
+pymongo[srv]
+python-dotenv
+pytz
+requests
