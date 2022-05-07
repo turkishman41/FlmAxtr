@@ -1,5 +1,5 @@
 services:
-  f1:
+  b1:
     build: .
     environment:
       CONFIG_FILE_URL: $CONFIG_FILE_URL
