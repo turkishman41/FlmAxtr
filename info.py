@@ -131,36 +131,18 @@ logging.info(f"GEN_CHAT_LINK_DELAY: {str(GEN_CHAT_LINK_DELAY)}")
 WELCOME_TEXT = environ.get('WELCOME_TEXT', 'Esenlikler {}. Hoş Geldin Sefa Geldin.')
 # link vb. girilebilir.
 
-defstarttxt = """Esenlikler {}, ben <a href=https://t.me/{}>{}</a>.
-Bana özelden yaz. /start yazsan yeterli.
-Ya bana bir kitap adı gönder,
-Ya da ara butonuna tıklayınca kitap adını yazmaya başla.
-Yapamadın mı? Diğelerine bakarak kopya çek.
-
-🔥 Boşluklarla aratsan daha iyi olur:
-Örnek: "nihalatsız ruh-adam.pdf" gibi yazma.
-Şöyle yaz: "nihal atsız ruh adam"
-Şöyle yaz: "ruh adam pdf"
-Nokta tire gibi şeyler kullanmıyoruz.
-Onun yerine boşluk koyuyoruz.
-
-🔥 Ne kadar az şey yazarsan o kadar çok sonuç çıkar:
-Örnek: "celal şengör dahi diktatör" gibi yazma.
-Şöyle yaz: "dahi diktatör"
-Şöyle yaz: "dahi diktatör epub"
-
-🔥 Eğer Türkçe terimler çalışmazsa Türkçe karakterleri çıkar:
-Örnek: "celal şengör dahi diktatör" gibi yazma.
-Şöyle yaz: "celal sengor dahi diktator"
+defstarttxt = """Merhaba {},
+Ben <a href='https://t.me/Anagrupbot'>Ana Grup Bot</a>, İnline Modda (Satır içi) çalışıyorum ve size film sağlamaya çalışıyorum. Eğer senin de bota eklenmesini istediğin film veya dizi önerin varsa <a href='https://t.me/Anagrupp'>İstek Ve Sohbet</a> Grubuna Beklerim.
 """
-
 LINK_FOR_EVERYTHING = environ.get('LINK_FOR_EVERYTHING', '')
 # tüm ayrıntılrınızı içeren birlink varsa buraya girin.
 START_TXT = environ.get('START_TXT', defstarttxt)
 # 3 tane yer tutucu bırakın. örneğin: "selam {} ben {} {}"
 if not len(LINK_FOR_EVERYTHING) == 0: 
-    START_TXT += f"\n🔥 Oku: {LINK_FOR_EVERYTHING}"
-
+START_TXT = """Merhaba {},
+Ben <a href='https://t.me/Anagrupbot'>Ana Grup Bot</a>, İnline Modda (Satır içi) çalışıyorum ve size film sağlamaya çalışıyorum. Eğer senin de bota eklenmesini istediğin film veya dizi önerin varsa <a href='https://t.me/Anagrupp'>İstek Ve Sohbet</a> Grubuna Beklerim."""
+HELP_TXT = """Merhaba {}
+İşte Komutlarım İçin Yardım ."""
 
 LINK_FOR_ABOUT_PIC = environ.get('LINK_FOR_ABOUT_PIC', 'https://telegra.ph/file/375b69b135524990cb7ca.jpg')
 # about kısmındaki foto linki.
