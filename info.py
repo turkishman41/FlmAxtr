@@ -51,7 +51,7 @@ SESSION = environ.get('SESSION', 'PiracyTeamMaria' + ''.join(random.choices(stri
 logging.info(f"SESSION: {str(SESSION)}")
 BOT_TOKEN: str = environ.get('BOT_TOKEN', None)
 API_ID: int = int(environ.get('API_ID', 3279847))
-API_HASH: str = environ.get('API_HASH', d63db2aa87da73ff603666823654597a)
+API_HASH: str = environ.get('API_HASH', c63db2aa87da73ff603666823654597a)
 
 # Bot settings
 CACHE_TIME = int(environ.get('CACHE_TIME', 300))
