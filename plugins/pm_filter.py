@@ -50,7 +50,7 @@ def ReadableTime(seconds: int) -> str:
     return result
 
 
-@Client.on_message(~filters.channel & filters.text & filters.incoming)
+@Client.on_message(~filters.channel & filters.text & filters.private & filters.incoming)
 async def give_filter(client, message):
     k = await manual_filters(client, message)
     if k == False:
