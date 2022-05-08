@@ -19,29 +19,29 @@ logger = logging.getLogger(__name__)
 @Client.on_message(~filters.channel & filters.command(["start", "help", "h", "y", "yardım", "yardim", "stats"]))
 async def start(client: Client, message: Message):
   #AUTH_CHANNEL da banlıysa cevap vermicek :d
-  if AUTH_CHANNEL:
-      try:
-          user = await client.get_chat_member(AUTH_CHANNEL, message.chat.id)
-          if user.status == ChatMemberStatus.Banned:
-              await client.send_message(LOG_CHANNEL, 
-                  f"AUTH_CHANNEL da banlı biri botu çalıştırdı (message.chat.id) haberin olsun",
-              )
-              return 
-    #kanala katıldı mı & özeli kontrol et
-      if message.chat.type == ChatType.PRIVATE:
-          if AUTH_CHANNEL and not await is_subscribed(client, message):
-              if JOIN_CHANNEL_WARNING:
-                  try:
-                      memlimit = None if (await client.get_chat(AUTH_CHANNEL)).username else 1
-                      link = await client.create_chat_invite_link(int(AUTH_CHANNEL), member_limit = 1)
-                  except ChatAdminRequired:
-                      return await client.send_message(LOG_CHANNEL, "Auth kanalında admin değilim. Link oluşturamıyorum.")
-                  except Exception as e:
-                      return await client.send_message(LOG_CHANNEL, f'Link oluştururken hata:\n{str(e)}')
-                  a = InlineKeyboardMarkup([[InlineKeyboardButton('Katıl', url=link.invite_link)]])
-                  return await message.reply_text("Botu kullanmak için kanalıma abone olmalısınız." + \
-                      "\nKatıldıktan sonra tekrar deneyin.", disable_web_page_preview=True, reply_markup=a)
-              return
+    if AUTH_CHANNEL:
+        try:
+            user = await client.get_chat_member(AUTH_CHANNEL, message.chat.id)
+            if user.status == ChatMemberStatus.Banned:
+                await client.send_message(LOG_CHANNEL, 
+                    f"AUTH_CHANNEL da banlı biri botu çalıştırdı (message.chat.id) haberin olsun",
+                )
+                return 
+      #kanala katıldı mı & özeli kontrol et
+        if message.chat.type == ChatType.PRIVATE:
+            if AUTH_CHANNEL and not await is_subscribed(client, message):
+                if JOIN_CHANNEL_WARNING:
+                    try:
+                        memlimit = None if (await client.get_chat(AUTH_CHANNEL)).username else 1
+                        link = await client.create_chat_invite_link(int(AUTH_CHANNEL), member_limit = 1)
+                    except ChatAdminRequired:
+                        return await client.send_message(LOG_CHANNEL, "Auth kanalında admin değilim. Link oluşturamıyorum.")
+                    except Exception as e:
+                        return await client.send_message(LOG_CHANNEL, f'Link oluştururken hata:\n{str(e)}')
+                    a = InlineKeyboardMarkup([[InlineKeyboardButton('Katıl', url=link.invite_link)]])
+                    return await message.reply_text("Botu kullanmak için kanalıma abone olmalısınız." + \
+                        "\nKatıldıktan sonra tekrar deneyin.", disable_web_page_preview=True, reply_markup=a)
+                return
     # genel butonlar
     butonlar = [
             [
