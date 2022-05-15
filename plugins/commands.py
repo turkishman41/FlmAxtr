@@ -12,11 +12,10 @@ from pyrogram.errors import ChatAdminRequired
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from pyrogram.enums import ParseMode, ChatType, MessageMediaType
 from database.ia_filterdb import Media, get_file_details, unpack_new_file_id
-from info import CHANNELS, ADMINS, AUTH_CHANNEL, CUSTOM_FILE_CAPTION, FILE_PROTECTED, GEN_CHAT_LINK_DELAY, JOIN_CHANNEL_WARNING, LOG_CHANNEL, START_TXT, REQUEST_LINK, PICS, DATABASE_NAME, DATABASE_URI 
+from info import CHANNELS, ADMINS, AUTH_CHANNEL, CUSTOM_FILE_CAPTION, FILE_PROTECTED, GEN_CHAT_LINK_DELAY, JOIN_CHANNEL_WARNING, LOG_CHANNEL, START_TXT, REQUEST_LINK, PICS
+from database.users_chats_db import db
 from utils import is_subscribed, temp
 logger = logging.getLogger(__name__)
-db = Database(DATABASE_URI, DATABASE_NAME)
-
 
 @Client.on_message(~filters.channel & filters.command(["start", "help", "h", "y", "yardım", "yardim", "stats"]))
 async def start(client: Client, message: Message):
