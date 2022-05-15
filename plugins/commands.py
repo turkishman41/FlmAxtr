@@ -62,7 +62,7 @@ async def start(client: Client, message: Message):
     # grup ?
     if message.chat.type in [ChatType.GROUP, ChatType.SUPERGROUP]:
         reply_markup = InlineKeyboardMarkup(butonlar)
-        await send_photo(
+        await message.reply_text(
             chat_id=message.from_user.id,
             photo=PICS,
             caption=START_TXT.format(message.from_user.mention if message.from_user else message.chat.title, temp.U_NAME, temp.B_NAME),
@@ -123,7 +123,7 @@ async def start(client: Client, message: Message):
     # normal start komutysa start texti gönder
     if len(message.command) != 2:
         reply_markup = InlineKeyboardMarkup(butonlar)
-        return await send_photo(
+        return await message.reply_text(
                    chat_id=message.from_user.id,
                    photo=PICS,
                    caption=START_TXT.format(message.from_user.mention),
