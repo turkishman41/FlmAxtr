@@ -10,38 +10,45 @@ from pyrogram.errors import ChatAdminRequired
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 from pyrogram.enums import ParseMode, ChatType, MessageMediaType
 from database.ia_filterdb import Media, get_file_details, unpack_new_file_id
-from database.users_chats_db import db
-from info import CHANNELS, ADMINS, AUTH_CHANNEL, CUSTOM_FILE_CAPTION, FILE_PROTECTED, GEN_CHAT_LINK_DELAY, JOIN_CHANNEL_WARNING, LOG_CHANNEL, START_TXT, REQUEST_LINK
+from database.users_chats_db import db ⁪⁬⁮⁮⁮
+from pyrogram.enums import ChatMemberStatus
+from pyrogram.errors import UserNotParticipant
+from info import CHANNELS, ADMINS, AUTH_CHANNEL, CUSTOM_FILE_CAPTION, FILE_PROTECTED, GEN_CHAT_LINK_DELAY, JOIN_CHANNEL_WARNING, LOG_CHANNEL, START_TXT, REQUEST_LINK, PICS
 from utils import is_subscribed, temp
 logger = logging.getLogger(__name__)
 
 
 @Client.on_message(~filters.channel & filters.command(["start", "help", "h", "y", "yardım", "yardim", "stats"]))
 async def start(client: Client, message: Message):
-    #AUTH_CHANNEL da banlıysa cevap vermicek :d
-    #if AUTH_CHANNEL:
-        #try:
-            #user = await client.get_chat_member(AUTH_CHANNEL, message.chat.id)
-            #if user.status == ChatMemberStatus.Banned:
-               #await client.send_message(LOG_CHANNEL, 
-                    #f"AUTH_CHANNEL da banlı biri botu çalıştırdı (message.chat.id) haberin olsun",
-                #)
-                #return 
-        #kanala katıldı mı & özeli kontrol et
-    if message.chat.type == ChatType.PRIVATE:
-        if AUTH_CHANNEL and not await is_subscribed(client, message):
-            if JOIN_CHANNEL_WARNING:
-                try:
-                    memlimit = None if (await client.get_chat(AUTH_CHANNEL)).username else 1
-                    link = await client.create_chat_invite_link(int(AUTH_CHANNEL), member_limit = 1)
-                except ChatAdminRequired:
-                    return await client.send_message(LOG_CHANNEL, "Auth kanalında admin değilim. Link oluşturamıyorum.")
-                except Exception as e:
-                    return await client.send_message(LOG_CHANNEL, f'Link oluştururken hata:\n{str(e)}')
-                a = InlineKeyboardMarkup([[InlineKeyboardButton('Katıl', url=link.invite_link)]])
-                return await message.reply_text("Botu kullanmak için kanalıma abone olmalısınız." + \
-                    "\nKatıldıktan sonra tekrar deneyin.", disable_web_page_preview=True, reply_markup=a)
+    try:
+        forcsub = await client.create_chat_invite_link(AUTH_CHANNEL, creates_join_request=True)
+    except FloodWait as e:
+        await asyncio.sleep(e.x)
+        return
+    try:
+        user = await client.get_chat_member(AUTH_CHANNEL, message.from_user.id)
+        if user.status == ChatMemberStatus.BANNED:
+            await client.delete_messages(
+                chat_id=message.from_user.id,
+                revoke=True,
+                parse_mode=ParseMode.HTML
+            )
             return
+    except UserNotParticipant:
+        await client.send_message(
+            chat_id=message.from_user.id,
+            text="Merhaba bu botu sadece gruba üye olanlar kullanabilir eğer gruba üye olmak istiyorsan aşağıdaki butondan istek gönder eğer fake isim koyarsan yada profil fotoğrafını yoksa seni gruba kabul edemem!",
+            reply_markup=InlineKeyboardMarkup(
+                [
+                    [
+                        InlineKeyboardButton("Kanalım", url=forcsub.invite_link)
+                    ]
+                ]
+            ),
+            parse_mode=ParseMode.HTML, 
+            protect_content=True
+        )
+        return
     # genel butonlar
     butonlar = [
             [
@@ -55,9 +62,14 @@ async def start(client: Client, message: Message):
     # grup ?
     if message.chat.type in [ChatType.GROUP, ChatType.SUPERGROUP]:
         reply_markup = InlineKeyboardMarkup(butonlar)
-        await message.reply_text(START_TXT.format(
+        await message.reply_photo(
+            photo=PICS,
+            caption=START_TXT.format(
             message.from_user.mention if message.from_user else message.chat.title, temp.U_NAME, temp.B_NAME),
-            reply_markup=reply_markup, disable_web_page_preview=True)
+            reply_markup=reply_markup, 
+            disable_web_page_preview=True,
+            parse_mode=ParseMode.HTML
+        )
         await asyncio.sleep(2)
         if not await db.get_chat(message.chat.id):
             total = await client.get_chat_members_count(message.chat.id)
