@@ -29,7 +29,6 @@ async def start(client: Client, message: Message):
         if user.status == ChatMemberStatus.BANNED:
             await client.delete_messages(
                 chat_id=message.from_user.id,
-                message_id=message.from_message.id,
                 revoke=True,
                 parse_mode=ParseMode.HTML
             )
