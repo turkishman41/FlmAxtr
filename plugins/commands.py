@@ -124,6 +124,7 @@ async def start(client: Client, message: Message):
     if len(message.command) != 2:
         reply_markup = InlineKeyboardMarkup(butonlar)
         return await client.send_photo(
+            chat_id=message.from_user.id,
             photo=random.choice(PICS),
             caption=START_TXT.format(
             message.from_user.mention if message.from_user else message.chat.title, temp.U_NAME, temp.B_NAME),
