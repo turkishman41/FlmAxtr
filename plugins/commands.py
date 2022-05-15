@@ -62,9 +62,8 @@ async def start(client: Client, message: Message):
     # grup ?
     if message.chat.type in [ChatType.GROUP, ChatType.SUPERGROUP]:
         reply_markup = InlineKeyboardMarkup(butonlar)
-        await message.reply_text(
-            chat_id=message.from_user.id,
-            text=START_TXT.format(message.from_user.mention if message.from_user else message.chat.title, temp.U_NAME, temp.B_NAME),
+        await message.reply_text(START_TXT.format(
+            message.from_user.mention if message.from_user else message.chat.title, temp.U_NAME, temp.B_NAME),
             reply_markup=reply_markup, 
             disable_web_page_preview=True,
             parse_mode=ParseMode.HTML
@@ -125,7 +124,6 @@ async def start(client: Client, message: Message):
         return await message.reply_text(
             text=START_TXT.format(
             message.from_user.mention if message.from_user else message.chat.title, temp.U_NAME, temp.B_NAME),     
-            chat_id=message.from_user.id,
             reply_markup=reply_markup, parse_mode=ParseMode.HTML, disable_web_page_preview=True)  
     file_id = message.command[1]
     files_ = await get_file_details(file_id)
