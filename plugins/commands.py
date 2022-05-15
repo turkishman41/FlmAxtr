@@ -119,11 +119,10 @@ async def start(client: Client, message: Message):
                 f"\nTarih: `{guncelTarih()}`"
             )
     # normal start komutysa start texti gönder
+    try:
     if len(message.command) != 2:
         reply_markup = InlineKeyboardMarkup(butonlar)
-        return 
-    try:
-        await message.reply_photo(
+        return await message.reply_photo(
             photo=PICS,
             caption=START_TXT.format(
             message.from_user.mention if message.from_user else message.chat.title, temp.U_NAME, temp.B_NAME),     
