@@ -64,8 +64,7 @@ async def start(client: Client, message: Message):
         reply_markup = InlineKeyboardMarkup(butonlar)
         await message.reply_text(
             chat_id=message.from_user.id,
-            photo=PICS,
-            caption=START_TXT.format(message.from_user.mention if message.from_user else message.chat.title, temp.U_NAME, temp.B_NAME),
+            text=START_TXT.format(message.from_user.mention if message.from_user else message.chat.title, temp.U_NAME, temp.B_NAME),
             reply_markup=reply_markup, 
             disable_web_page_preview=True,
             parse_mode=ParseMode.HTML
@@ -125,8 +124,7 @@ async def start(client: Client, message: Message):
         reply_markup = InlineKeyboardMarkup(butonlar)
         return await message.reply_text(
                    chat_id=message.from_user.id,
-                   photo=PICS,
-                   caption=START_TXT.format(message.from_user.mention),
+                   text=START_TXT.format(message.from_user.mention),
                    reply_markup=reply_markup, 
                    parse_mode=ParseMode.HTML, 
                    disable_web_page_preview=True
