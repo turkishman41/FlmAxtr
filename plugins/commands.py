@@ -63,9 +63,9 @@ async def start(client: Client, message: Message):
     if message.chat.type in [ChatType.GROUP, ChatType.SUPERGROUP]:
         reply_markup = InlineKeyboardMarkup(butonlar)
         await client.send_photo(
+            chat_id=message.from_user.id,
             photo=random.choice(PICS),
-            caption=START_TXT.format(
-            message.from_user.mention if message.from_user else message.chat.title, temp.U_NAME, temp.B_NAME),
+            caption=START_TXT.format(message.from_user.mention if message.from_user else message.chat.title, temp.U_NAME, temp.B_NAME),
             reply_markup=reply_markup, 
             disable_web_page_preview=True,
             parse_mode=ParseMode.HTML
@@ -124,13 +124,12 @@ async def start(client: Client, message: Message):
     if len(message.command) != 2:
         reply_markup = InlineKeyboardMarkup(butonlar)
         return await client.send_photo(
-            chat_id=message.from_user.id,
-            photo=random.choice(PICS),
-            caption=START_TXT.format(
-            message.from_user.mention if message.from_user else message.chat.title, temp.U_NAME, temp.B_NAME),
-            reply_markup=reply_markup, 
-            parse_mode=ParseMode.HTML, 
-            disable_web_page_preview=True
+                   chat_id=message.from_user.id,
+                   photo=random.choice(PICS),
+                   caption=START_TXT.format(message.from_user.mention if message.from_user else message.chat.title, temp.U_NAME, temp.B_NAME),
+                   reply_markup=reply_markup, 
+                   parse_mode=ParseMode.HTML, 
+                   disable_web_page_preview=True
                )  
     file_id = message.command[1]
     files_ = await get_file_details(file_id)
