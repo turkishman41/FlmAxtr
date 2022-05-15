@@ -126,8 +126,8 @@ async def start(client: Client, message: Message):
             caption=START_TXT.format(
             message.from_user.mention if message.from_user else message.chat.title, temp.U_NAME, temp.B_NAME),     
             reply_markup=reply_markup, parse_mode=ParseMode.HTML, disable_web_page_preview=True)
-        except Exception as e:
-            Logger.warn(e)
+    except Exception as e:
+        logger.exception(e)
     file_id = message.command[1]
     files_ = await get_file_details(file_id)
     if not files_:
