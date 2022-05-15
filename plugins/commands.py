@@ -123,12 +123,9 @@ async def start(client: Client, message: Message):
     if len(message.command) != 2:
         reply_markup = InlineKeyboardMarkup(butonlar)
         return await message.reply_text(
-                   chat_id=message.from_user.id,
-                   text=START_TXT.format(message.from_user.mention),
-                   reply_markup=reply_markup, 
-                   parse_mode=ParseMode.HTML, 
-                   disable_web_page_preview=True
-               )  
+             chat_id=message.from_user.id,
+             text=START_TXT.format(message.from_user.mention),
+             reply_markup=reply_markup, parse_mode=ParseMode.HTML, disable_web_page_preview=True)  
     file_id = message.command[1]
     files_ = await get_file_details(file_id)
     if not files_:
